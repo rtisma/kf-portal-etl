@@ -2,13 +2,15 @@ package io.kf.etl.pipeline
 
 import com.google.inject.{AbstractModule, Guice, Injector}
 import com.typesafe.config.Config
-import io.kf.etl.common.context.Context
 import io.kf.etl.common.inject.GuiceModule
 import org.reflections.Reflections
 import io.kf.etl.common.Constants._
-import io.kf.etl.processor.document.DocumentProcessor
-import io.kf.etl.processor.download.DownloadProcessor
-import io.kf.etl.processor.index.IndexProcessor
+import io.kf.etl.context.Context
+import io.kf.etl.processors.filecentric.FileCentricProcessor
+import io.kf.etl.processors.download.DownloadProcessor
+import io.kf.etl.processors.index.IndexProcessor
+import io.kf.etl.processors.participantcentric.ParticipantCentricProcessor
+import io.kf.etl.processors.repo.Repository
 import org.apache.hadoop.fs.FileSystem
 import org.apache.spark.sql.SparkSession
 
@@ -45,10 +47,22 @@ object Pipeline {
 
   def run():Unit = {
     val download = injector.getInstance(classOf[DownloadProcessor])
-    val document = injector.getInstance(classOf[DocumentProcessor])
+    val filecentric = injector.getInstance(classOf[FileCentricProcessor])
+    val participantcentric = injector.getInstance(classOf[ParticipantCentricProcessor])
     val index = injector.getInstance(classOf[IndexProcessor])
 
-    download.process().map(index.process(_))
+
+    val dump_location = download.process()
+
+    val fp = filecentric.process _
+    fp.andThen(index.process)(dump_location)
+
+    val pp = participantcentric.process _
+    pp.andThen(index.process)(dump_location)
+
+//    val dp:Unit => Repository = download.process
+//    dp.andThen(filecentric.process).andThen(index.process)()
+//    dp.andThen(participantcentric.process).andThen(index.process)()
 
   }
 
