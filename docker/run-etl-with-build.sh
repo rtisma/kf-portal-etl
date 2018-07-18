@@ -7,8 +7,8 @@ cp kf-portal-etl-pipeline/target/scala-2.11/kf-portal-etl.jar ./docker/etl
 cd docker/
 
 # download spark
-SPARK_VERSION=2.3.0
-wget http://httpd-mirror.sergal.org/apache/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop2.7.tgz
+SPARK_VERSION=2.3.1
+./smart-download-spark.sh $SPARK_VERSION
 
 cp kf_etl.conf ./etl/
 cp spark-${SPARK_VERSION}-bin-hadoop2.7.tgz ./etl/

@@ -6,7 +6,7 @@ USER root
 
 RUN mkdir lib/ conf/ bin/ data/
 
-ARG SPARK_VERSION=2.3.0
+ARG SPARK_VERSION=2.3.1
 ARG SPARK_MASTER
 ARG SPARK_DEPLOY_MODE=client
 ARG ETL_JAR_FILE_NAME=kf-portal-etl.jar

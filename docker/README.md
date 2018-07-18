@@ -18,7 +18,7 @@ The directory ```etl``` defines the ```kf-etl``` container, which has embedded s
 
 The ETL Dockerfile asks for the following `ARG` to be provided when building the docker image:
 
-- `SPARK_VERSION`: Spark version. The default value is `2.3.0`
+- `SPARK_VERSION`: Spark version. The default value is `2.3.1`
 - `ETL_JAR_URL`: ETL jar file in the URL format, for example: http://..../kf-portal-etl.jar. The default value is `kf-portal-etl.jar`
 - `ETL_CONFIGURATION_FILE_URL`: ETL configuration file in the URL format, for example: http://..../kf_etl.conf. The default value is `kf_etl.conf`
 - `SPARK_MASTER`: Spark cluster master URL.

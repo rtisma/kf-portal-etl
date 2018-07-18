@@ -2,7 +2,7 @@ FROM airdock/oracle-jdk:latest
 
 USER root
 
-ARG SPARK_VERSION=2.3.0
+ARG SPARK_VERSION=2.3.1
 
 COPY spark-${SPARK_VERSION}-bin-hadoop2.7.tgz /usr/local
 
